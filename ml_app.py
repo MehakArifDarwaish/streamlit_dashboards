@@ -74,6 +74,24 @@ def get_classifier(classifier_name, params):
     else:
         classifier = RandomForestClassifier(n_estimators=params["n_estimators"], max_depth=params["max_depth"], random_state=1234)
     return classifier
+
+if st.checkbox("Show code for classifier"):
+    st.write("Classifier code")
+    with st.echo():
+        
+            # dataset split
+        X_train, X_test, y_train, y_test = train_test_split(X, y,   test_size=0.2, random_state=1234)       
+        classifier = get_classifier(classifier_name, params)
+
+        # model training        
+        classifier.fit(X_train, y_train)
+        y_pred = classifier.predict(X_test) 
+
+        # model evaluation
+        acc = accuracy_score(y_test, y_pred)        
+        st.write(f"Classifier = {classifier_name}")
+        st.write(f"Accuracy = {acc}")       
+
 # dataset split
 X_train, X_test, y_train, y_test = train_test_split(X, y,   test_size=0.2, random_state=1234)       
 classifier = get_classifier(classifier_name, params)
